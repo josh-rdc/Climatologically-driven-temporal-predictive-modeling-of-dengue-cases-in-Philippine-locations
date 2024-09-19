@@ -1,4 +1,7 @@
+### GRAPHICAL ABSTRACT 
+![Graphical%20Abstract/AI%20221%20Graphical%20Abstract.png](Graphical%20Abstract/AI%20221%20Graphical%20Abstract.png)
 
+### DECK
 ![Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(1).png](Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(1).png)
 
 ![Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(2).png](Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(2).png)
@@ -39,4 +42,3 @@
 
 ![Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(20).png](Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(20).png)
 
-![Graphical%20Abstract/AI%20221%20Graphical%20Abstract.png](Graphical%20Abstract/AI%20221%20Graphical%20Abstract.png)
