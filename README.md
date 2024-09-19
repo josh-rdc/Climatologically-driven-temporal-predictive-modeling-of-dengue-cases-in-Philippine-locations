@@ -1,4 +1,4 @@
-![Graphical%Abstract/AI%221%Graphical%Abstract.png](Graphical Abstract/AI 221 Graphical Abstract.png)
+<!-- ![Graphical%Abstract/AI%221%Graphical%Abstract.png](Graphical Abstract/AI 221 Graphical Abstract.png) -->
 ![Resources/Dengue%Outbreak%Predictive%Modeling%(1).png](Resources/Dengue Outbreak Predictive Modeling (1).png)
 ![Resources/Dengue%Outbreak%Predictive%Modeling%(2).png](Resources/Dengue Outbreak Predictive Modeling (2).png)
 ![Resources/Dengue%Outbreak%Predictive%Modeling%(3).png](Resources/Dengue Outbreak Predictive Modeling (3).png)
