@@ -1,5 +1,5 @@
 ### GRAPHICAL ABSTRACT 
-![Graphical%20Abstract/Graphical%20Abstract.png](Graphical%20Abstract/Graphical%20Abstract.png)
+![Graphical%20Abstract/Graphical%20Abstract.jpg](Graphical%20Abstract/Graphical%20Abstract.jpg)
 
 ### DECK
 ![Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(1).png](Resources/Dengue%20Outbreak%20Predictive%20Modeling%20(1).png)
