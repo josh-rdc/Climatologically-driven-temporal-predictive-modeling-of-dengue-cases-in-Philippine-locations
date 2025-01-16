@@ -56,11 +56,8 @@ The dataset used in this study combines dengue case data and climate variables t
 After preprocessing, the dataset included 33,012 data points, reduced to 783 time series data points for the selected cluster. The clustering results and ADF test outcomes demonstrate the dataset's readiness for modeling.
 
 ## Feature Processing
-## Feature Processing
 
 This section describes the steps taken to preprocess and engineer features for predictive analysis of dengue cases in Philippine locations. The dataset combined dengue case data with climate variables and included both temporal and geographical features, anomaly detection, and feature selection techniques.
-
-### Major Steps and Results
 
 | Step                           | Description                                                                                         | Result                                                                                                   |
 |--------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
@@ -73,10 +70,49 @@ This section describes the steps taken to preprocess and engineer features for p
 
 ## Model Survey
 
+### Statistical Time Series Models
+For time series forecasting, **ARIMA** (Autoregressive Integrated Moving Average) was best known statistical model to use. However, given the seasonality in the data, an extended version of **SARIMA** (Seasonal ARIMA) which includes seasonal components was utilized in this porject. Furthermore, **SARIMAX** which incorporating exogenous variables (external factors), was also considered to account for multivariate time series. 
+---
+### Classical Machine Learnin Models
+For classical machine learning models, the [TPOT (Tree-based Pipeline Optimization Tool)](http://epistasislab.github.io/tpot/) tool was used to automate and select the best-performing model. TPOT applies genetic programming to explore various machine learning pipelines and identify the optimal model. The models evaluated included several regression methods to predict dengue cases, with the following models emerging as top two best models:
+- **SGD Regressor**: Best performance with a TPOT score of -3340.9179, utilizing Huber loss and ElasticNet regularization, making it robust to outliers.
+- **XGBoost Regressor**: Known for handling complex relationships with a TPOT score of -3732.0512.
+
 ## Hyperparameter Tuning
 
-## Results
+### Statistical Time Series Models
+For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto_arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges for **SARIMA** and **SARIMAX** are listed below:
 
+| Hyperparameter | Range        |
+|-----------------|--------------|
+| p               | 0 to 5       |
+| d               | 0 to 2       |
+| q               | 0 to 5       |
+| P               | 0 to 5       |
+| D               | 0 to 2       |
+| Q               | 0 to 5       |
+
+#### Optuna for Classical Models
+For tuning hyperparameters of the classical ML models, **SGD Regressor** and **XGBoost Regressor**, [Optuna](https://optuna.org) was employed. Optuna is an open-source optimization tool that surpasses traditional search methods by using sophisticated algorithms like **Tree-structured Parzen Estimator (TPE)**. This optimization process iteratively refines the hyperparameter range to minimize the selected metric, RMSE. The hyperparameter ranges for **SGD** and **XGBoost** are as follows:
+
+| Algorithm       | Hyperparameter    | Range               |
+|-----------------|-------------------|---------------------|
+| **XGBoost**     | n estimators      | 50 to 200           |
+|                 | max depth         | 2 to 32 (log scale) |
+|                 | learning rate     | 0.01 to 0.1 (log scale) |
+|                 | subsample         | 0.1 to 0.7          |
+|                 | min child weight  | 8 to 400            |
+| **SGD Regressor** | alpha            | 1e-6 to 1e-1        |
+|                 | eta0              | 1e-4 to 1e-1        |
+|                 | fit intercept     | True, False         |
+|                 | l1 ratio          | 0.0 to 1.0         |
+|                 | learning rate     | constant, optimal, invscaling, adaptive |
+|                 | loss              | epsilon insensitive, huber, squared error, squared epsilon insensitive |
+|                 | penalty           | l2, l1, elasticnet |
+|                 | power t           | 0.1 to 1.0         |
+
+
+## Results
 ### Model Evaluation
 The final performance metrics for the tuned models used in predicting dengue fever incidence across Bulacan, Quezon City, and Rizal are summarized in following plots and tables.
 
@@ -113,7 +149,7 @@ The `moving average` method was applied to predict dengue outbreaks. This method
 | Quezon City | ![Outbreak QC](Assets/Result/OutbreakQC.png) |
 | Rizal    | ![Outbreak Rizal](Assets/Result/OutbreakRizal.png) |
 
-Using the threshold-based outbreak classification for 2019 to 2020, several misclassifications were found. 
+Based on the graph, the following insights were obtained:
 - For Bulacan, the model predicted an outbreak before July, while it actually occurred later. 
 - In Rizal, 10 predicted outbreaks occurred, but only 5 were true outbreaks. One outbreak was predicted for January 2020, though it happened in the last quarter of 2019. Additionally, no outbreaks were predicted for the end of 2020. 
 - In Quezon City, only one predicted outbreak before July 2019 matched the actual occurrence, and the model missed all 2020 outbreaks.
