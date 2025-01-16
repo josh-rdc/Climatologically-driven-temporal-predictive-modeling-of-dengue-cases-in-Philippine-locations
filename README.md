@@ -17,11 +17,10 @@ The details of the methodology and results are discussed in the following sectio
 - [Conclusions and Recommendations](#conclusions-and-recommendations)
 - [References](#references)
 
-`--update in progress`
 ## Data Collection 
 The dataset used in this study combines dengue case data and climate variables to create the input features and target for analysis. 
 1. Dengue case data, covering weekly confirmed cases and deaths from January 10, 2016, to January 10, 2021, across 126 locations in the Philippines, was sourced from the [Department of Health-Epidemiology Bureau and hosted by the Humanitarian Data Exchange](https://data.humdata.org/dataset/philippine-dengue-cases-and-deaths) labeled as `DOH-Epi Dengue Data 2016-2021`.
-2. Climate data was obtained from [NASA’s POWER Project via its API](https://power.larc.nasa.gov/), which provided daily meteorological variables for each location based on their coordinates. The selected climate variables, totaling to 54 features, configured to align with the study's requirements are attached in this [Annex](Assets/AnnexClimateVariables.pdf).
+2. Climate data was obtained from [NASA’s POWER Project via its API](https://power.larc.nasa.gov/), which provided daily meteorological variables for each location based on their coordinates. The selected climate variables, totaling to 59 features, configured to align with the study's requirements are attached in this [Annex](Assets/AnnexClimateVariables.pdf).
 
 ## Data Preprocessing
 1. **Temporal Alignment** - To integrate weekly dengue case data with daily climate variables, the climate data was aggregated into weekly values. Aggregation methods, such as weekly sum for precipitation and maximum or minimum for extreme temperatures, were applied based on the nature of each climate feature. Further details are also presented in the Annex for selected climate features.
@@ -70,6 +69,10 @@ The following describes the steps taken to preprocess and engineer features for 
     A **silhouette score of 0.72, identifying 14% of the dengue cases as outliers**, primarily composed of points belonging to weeks with increasing spikes as seen on the scatter plot below was obtained.
 
 4. **Univariate Correlation Check** - Performed Pearson univariate correlation analysis to address multicollinearity and reduce redundancy of normalized features. A **threshold of 0.95 was set for the absolute values of the correlation coefficients**, where feature pairs with a correlation above this threshold were deemed highly correlated. This process of removing highly correlated features helps avoid redundancy and overfitting and improves model interpretability
+
+    ![Assets/Correlation.png](Assets/Correlation.png)
+
+    After perform the feature selection, **19 climate features were successfully filtered out resulting to the 40 features** as shown in the correlation plot above.
 
 ## Model Survey
 
