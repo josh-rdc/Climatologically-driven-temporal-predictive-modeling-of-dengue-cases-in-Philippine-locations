@@ -57,26 +57,29 @@ After preprocessing, the dataset included 33,012 data points, reduced to 783 tim
 
 ## Feature Processing
 
-This section describes the steps taken to preprocess and engineer features for predictive analysis of dengue cases in Philippine locations. The dataset combined dengue case data with climate variables and included both temporal and geographical features, anomaly detection, and feature selection techniques.
+The following describes the steps taken to preprocess and engineer features for predictive analysis of dengue cases.
 
-| Step                           | Description                                                                                         | Result                                                                                                   |
-|--------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| **Temporal Feature Engineering**   | Extracted day, month, and year from the date, added lagged 4-week moving averages, and applied Fourier series transformations. | Enhanced the dataset with temporal trends and seasonal patterns for better predictive performance.       |
-| **Geographical Feature Engineering** | Included latitude, longitude, and location labels as encoded features.                             | Captured spatial variations in dengue transmission influenced by location-specific conditions.           |
-| **Anomaly Detection**              | Used DBSCAN with optimized parameters (`eps`, `min_samples`) to detect and remove data anomalies. | Improved data quality by eliminating noise, enhancing model robustness.                                 |
-| **Climate Feature Selection**      | Categorized variables into solar radiation, cloud cover, hydrology, temperature, and wind speed.   | Selected impactful climate variables based on relevance to dengue transmission dynamics.                |
-| **Univariate Correlation Check**   | Performed Pearson correlation analysis to address multicollinearity and reduce redundancy.         | Reduced dataset dimensionality, avoiding overfitting and improving interpretability.                    |
+1.  **Temporal Feature Engineering** - Extracted day, month, and year from the date, added lagged 4-week moving averages, and applied Fourier series transformations to capture the cyclical nature of dengue case patterns over a year.
 
+2. **Geographical Feature Engineering** - Included latitude, longitude, and location labels as encoded features.
+
+3. **Anomaly Detection** - Used [Density-Based Spatial Clustering of Applications with Noise (DBSCAN)](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN) with parameters (`eps`, `min_samples`) optimized via grid search to detect data anomalies and consider them as features. 
+
+    ![Assets/DBSCAN.png](Assets/DBSCAN.png)
+
+    A **silhouette score of 0.72, identifying 14% of the dengue cases as outliers**, primarily composed of points belonging to weeks with increasing spikes as seen on the scatter plot below was obtained.
+
+4. **Univariate Correlation Check** - Performed Pearson univariate correlation analysis to address multicollinearity and reduce redundancy of normalized features. A **threshold of 0.95 was set for the absolute values of the correlation coefficients**, where feature pairs with a correlation above this threshold were deemed highly correlated. This process of removing highly correlated features helps avoid redundancy and overfitting and improves model interpretability
 
 ## Model Survey
 
 ### Statistical Time Series Models
 
-For time series forecasting, **ARIMA** (Autoregressive Integrated Moving Average) was best known statistical model to use. However, given the seasonality in the data, an extended version of **SARIMA** (Seasonal ARIMA) which includes seasonal components was utilized in this porject. Furthermore, **SARIMAX** which incorporating exogenous variables (external factors), was also considered to account for multivariate time series. 
+For time series forecasting, **ARIMA** (Autoregressive Integrated Moving Average) was best known statistical model to use. However, given the seasonality in the data, the extended version **SARIMA** (Seasonal ARIMA) which includes seasonal components was utilized in this porject. Furthermore, **SARIMAX** which incorporating exogenous variables (external factors), was also considered to account for multivariate time series. 
 
 ---
 
-### Classical Machine Learnin Models
+### Classical Machine Learning Models
 
 For classical machine learning models, the [TPOT (Tree-based Pipeline Optimization Tool)](http://epistasislab.github.io/tpot/) tool was used to automate and select the best-performing model. TPOT applies genetic programming to explore various machine learning pipelines and identify the optimal model. The models evaluated included several regression methods to predict dengue cases, with the following models emerging as top two best models:
 
@@ -86,7 +89,7 @@ For classical machine learning models, the [TPOT (Tree-based Pipeline Optimizati
 ## Hyperparameter Tuning
 
 ### Auto-ARIMA
-For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto-arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges and tuned values for **SARIMA** and **SARIMAX** are listed below:
+For tuning the parameters of the **SARIMA** and **SARIMAX** models, the [`auto-arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p`, `d`, `q`, `P`, `D`, and `Q`. The hyperparameter ranges and tuned values for **SARIMA** and **SARIMAX** are listed below:
 
 | Hyperparameter | Range        | SARIMA | SARIMAX |
 |-----------------|--------------|--------------|--------------|
