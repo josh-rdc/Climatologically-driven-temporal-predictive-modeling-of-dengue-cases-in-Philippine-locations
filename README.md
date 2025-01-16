@@ -71,17 +71,22 @@ This section describes the steps taken to preprocess and engineer features for p
 ## Model Survey
 
 ### Statistical Time Series Models
+
 For time series forecasting, **ARIMA** (Autoregressive Integrated Moving Average) was best known statistical model to use. However, given the seasonality in the data, an extended version of **SARIMA** (Seasonal ARIMA) which includes seasonal components was utilized in this porject. Furthermore, **SARIMAX** which incorporating exogenous variables (external factors), was also considered to account for multivariate time series. 
+
 ---
+
 ### Classical Machine Learnin Models
+
 For classical machine learning models, the [TPOT (Tree-based Pipeline Optimization Tool)](http://epistasislab.github.io/tpot/) tool was used to automate and select the best-performing model. TPOT applies genetic programming to explore various machine learning pipelines and identify the optimal model. The models evaluated included several regression methods to predict dengue cases, with the following models emerging as top two best models:
+
 - **SGD Regressor**: Best performance with a TPOT score of -3340.9179, utilizing Huber loss and ElasticNet regularization, making it robust to outliers.
 - **XGBoost Regressor**: Known for handling complex relationships with a TPOT score of -3732.0512.
 
 ## Hyperparameter Tuning
 
-### Statistical Time Series Models
-For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto_arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges and tuned values for **SARIMA** and **SARIMAX** are listed below:
+### Auto-ARIMA
+For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto-arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges and tuned values for **SARIMA** and **SARIMAX** are listed below:
 
 | Hyperparameter | Range        | SARIMA | SARIMAX |
 |-----------------|--------------|--------------|--------------|
@@ -95,7 +100,7 @@ For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto_ari
 
 ---
 
-### Optuna for Classical Models
+### Optuna
 For tuning hyperparameters of the classical ML models, **SGD Regressor** and **XGBoost Regressor**, [Optuna](https://optuna.org) was employed. Optuna is an open-source optimization tool that surpasses traditional search methods by using sophisticated algorithms like **Tree-structured Parzen Estimator (TPE)**. This optimization process iteratively refines the hyperparameter range to minimize the selected metric, RMSE. The hyperparameter ranges together with their result for **SGD** and **XGBoost** are as follows:
 
 | Algorithm       | Hyperparameter    | Range               | Tuned Values |
