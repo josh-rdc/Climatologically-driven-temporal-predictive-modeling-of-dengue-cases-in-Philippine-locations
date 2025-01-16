@@ -8,7 +8,8 @@ Dengue fever is a major public health concern, particularly in countries like th
 -------
 ![Assets/ProjectMethodology.png](Assets/ProjectMethodology.png)
 
-Slide deck is located [here](Deck).
+Access the presentation deck is located [here](Deck).
+
 The details of the methodology and results are discussed in the following sections.
 - [Dataset Collection](#data-collection)
 - [Data Preprocessing](#data-preprocessing)
