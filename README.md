@@ -81,35 +81,37 @@ For classical machine learning models, the [TPOT (Tree-based Pipeline Optimizati
 ## Hyperparameter Tuning
 
 ### Statistical Time Series Models
-For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto_arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges for **SARIMA** and **SARIMAX** are listed below:
+For tuning the parameters of the **ARIMA** and **SARIMA** models, the [`auto_arima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html) function was used. It optimizes the order of parameters by minimizing the **Akaike Information Criterion (AIC)** through a grid search over predefined ranges for the values of `p, d, q, P, D, and Q`. The hyperparameter ranges and tuned values for **SARIMA** and **SARIMAX** are listed below:
 
-| Hyperparameter | Range        |
-|-----------------|--------------|
-| p               | 0 to 5       |
-| d               | 0 to 2       |
-| q               | 0 to 5       |
-| P               | 0 to 5       |
-| D               | 0 to 2       |
-| Q               | 0 to 5       |
+| Hyperparameter | Range        | SARIMA | SARIMAX |
+|-----------------|--------------|--------------|--------------|
+| p               | 0 to 5       | 2 | 1 |
+| d               | 0 to 2       | 1 | 0 |
+| q               | 0 to 5       | 3 | 1 |
+| P               | 0 to 5       | 3 | 0 |
+| D               | 0 to 2       | 0 | 0 |
+| Q               | 0 to 5       | 2 | 0 |
+| m               | 0 to 5       | 4 | 4 |
 
-#### Optuna for Classical Models
-For tuning hyperparameters of the classical ML models, **SGD Regressor** and **XGBoost Regressor**, [Optuna](https://optuna.org) was employed. Optuna is an open-source optimization tool that surpasses traditional search methods by using sophisticated algorithms like **Tree-structured Parzen Estimator (TPE)**. This optimization process iteratively refines the hyperparameter range to minimize the selected metric, RMSE. The hyperparameter ranges for **SGD** and **XGBoost** are as follows:
+---
 
-| Algorithm       | Hyperparameter    | Range               |
-|-----------------|-------------------|---------------------|
-| **XGBoost**     | n estimators      | 50 to 200           |
-|                 | max depth         | 2 to 32 (log scale) |
-|                 | learning rate     | 0.01 to 0.1 (log scale) |
-|                 | subsample         | 0.1 to 0.7          |
-|                 | min child weight  | 8 to 400            |
-| **SGD Regressor** | alpha            | 1e-6 to 1e-1        |
-|                 | eta0              | 1e-4 to 1e-1        |
-|                 | fit intercept     | True, False         |
-|                 | l1 ratio          | 0.0 to 1.0         |
-|                 | learning rate     | constant, optimal, invscaling, adaptive |
-|                 | loss              | epsilon insensitive, huber, squared error, squared epsilon insensitive |
-|                 | penalty           | l2, l1, elasticnet |
-|                 | power t           | 0.1 to 1.0         |
+### Optuna for Classical Models
+For tuning hyperparameters of the classical ML models, **SGD Regressor** and **XGBoost Regressor**, [Optuna](https://optuna.org) was employed. Optuna is an open-source optimization tool that surpasses traditional search methods by using sophisticated algorithms like **Tree-structured Parzen Estimator (TPE)**. This optimization process iteratively refines the hyperparameter range to minimize the selected metric, RMSE. The hyperparameter ranges together with their result for **SGD** and **XGBoost** are as follows:
+
+| Algorithm       | Hyperparameter    | Range               | Tuned Values |
+|-----------------|-------------------|---------------------|---------------------|
+| **XGBoost**     | n estimators      | 50 to 200           | 164 |
+|                 | max depth         | 2 to 32 (log scale) | 4 |
+|                 | learning rate     | 0.01 to 0.1 (log scale) |  0.0283 |
+|                 | subsample         | 0.1 to 0.7          | 0.452 |
+|                 | min child weight  | 8 to 400            | 14 |
+| **SGD Regressor** | alpha            | 1e-6 to 1e-1        | 0.0304 | 
+|                 | fit intercept     | True, False         | True |
+|                 | l1 ratio          | 0.0 to 1.0         | 0.8563 |
+|                 | learning rate     | constant, optimal, invscaling, adaptive | invscaling |
+|                 | loss              | epsilon insensitive, huber, squared error, squared epsilon insensitive | huber |
+|                 | penalty           | l2, l1, elasticnet | elasticnet |
+|                 | power t           | 0.1 to 1.0         |  0.2232 |
 
 
 ## Results
