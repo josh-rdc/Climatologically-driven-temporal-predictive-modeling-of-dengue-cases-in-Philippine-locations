@@ -12,7 +12,7 @@ The details of the methodology and results are discussed in the following sectio
 - [Data Preprocessing](#data-preprocessing)
 - [Feature Processing](#feature-processing)
 - [Model Survey](#model-survey)
-- [Hyperparameter Tuning](#results-and-discussion)
+- [Hyperparameter Tuning](#hyperparameter-tuning)
 - [Results](#results)
 - [Conclusions and Recommendations](#conclusions-and-recommendations)
 - [References](#references)
